@@ -37,3 +37,23 @@ model todos {
   categories  categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users       users?      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
+
+model PriceRecord {
+  id                Int      @id @default(autoincrement())
+  tokenAddress      String
+  usdPrice          Float
+  usdPriceFormatted String
+  percentChange24h  Float
+  timestamp         DateTime
+
+  @@index([tokenAddress, timestamp])
+}
+
+model PriceAlert {
+  id           Int      @id @default(autoincrement())
+  tokenAddress String
+  targetPrice  Float
+  email        String
+  created      DateTime @default(now())
+  triggered    Boolean  @default(false)
+}

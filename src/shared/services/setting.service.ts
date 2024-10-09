@@ -246,10 +246,10 @@ export class SettingService {
     return {
       path: this.get('SWAGGER_PATH') || '/api/docs',
       title:
-        this.get('SWAGGER_TITLE') || 'Talentclass API ',
+        this.get('SWAGGER_TITLE') || 'Blockchain API ',
       description:
         this.get('SWAGGER_DESCRIPTION') ||
-        'Talentclass API Documentation',
+        'Blockchain API Documentation',
       version: this.get('SWAGGER_VERSION') || '0.0.1',
       scheme: this.get('SWAGGER_SCHEME') === 'https' ? 'https' : 'http',
     };
@@ -291,6 +291,12 @@ export class SettingService {
       expiresRefreshToken: this.get('JWT_EXPIRES_REFRESH_TOKEN') || '30d',
       privateKey,
       publicKey,
+    };
+  }
+
+  get moralisConfig() {
+    return {
+      apiKey: this.get('MORALIS_API_KEY') || '',
     };
   }
 }

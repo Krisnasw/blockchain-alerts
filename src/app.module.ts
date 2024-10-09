@@ -8,13 +8,10 @@ import { AbstractRequestContext } from './common/contexts/abstract-request.conte
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { SharedModule } from './shared.module';
-import { UserModule } from './modules/users/users.module';
 import { PrismaService } from './shared/prisma/prisma.service';
-import { AuthModule } from './modules/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { SettingService } from './shared/services/setting.service';
-import { CategoriesModule } from './modules/categories/categories.module';
-import { TodosModule } from './modules/todos/todos.module';
+import { PriceTrackerModule } from './modules/price-tracker/price-tracker.module';
 
 @Module({
   imports: [
@@ -41,10 +38,7 @@ import { TodosModule } from './modules/todos/todos.module';
     EventEmitterModule.forRoot(),
     TerminusModule,
     SharedModule,
-    UserModule,
-    AuthModule,
-    CategoriesModule,
-    TodosModule,
+    PriceTrackerModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

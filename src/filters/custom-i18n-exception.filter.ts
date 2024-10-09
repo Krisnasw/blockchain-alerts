@@ -68,7 +68,9 @@ export class CustomI18nValidationExceptionFilter implements ExceptionFilter {
       case !this.options.detailedErrors && !('errorFormatter' in this.options):
         return this.flattenValidationErrors(validationErrors);
       case !this.options.detailedErrors && 'errorFormatter' in this.options:
-        return this.options.errorFormatter(validationErrors);
+        return (
+          this.options as I18nValidationExceptionFilterErrorFormatterOption
+        ).errorFormatter(validationErrors);
       default:
         return validationErrors;
     }
