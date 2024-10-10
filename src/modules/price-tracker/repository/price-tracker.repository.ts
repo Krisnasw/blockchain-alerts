@@ -42,15 +42,27 @@ export class PriceTrackerRepository {
     });
   }
 
-  async getPricesByTimestampRange(
-    startDate: Date,
-    endDate: Date,
-  ) {
+  async getUntriggeredPriceAlerts() {
+    return this.prisma.priceAlert.findMany({
+      where: {
+        triggered: false,
+      },
+    });
+  }
+
+  async markAlertAsTriggered(id: number) {
+    return this.prisma.priceAlert.update({
+      where: { id },
+      data: { triggered: true },
+    });
+  }
+
+  async getPricesByTimestampRange(startDate: Date, endDate: Date) {
     return await this.prisma.priceRecord.findMany({
       where: {
         timestamp: {
-            gte: startDate,
-            lte: endDate,
+          gte: startDate,
+          lte: endDate,
         },
       },
       orderBy: {

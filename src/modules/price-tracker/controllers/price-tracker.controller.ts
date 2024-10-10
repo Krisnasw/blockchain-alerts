@@ -1,11 +1,20 @@
-import { Controller, Post, Logger, Body, Get, Res, UseInterceptors, HttpStatus, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Logger,
+  Body,
+  Get,
+  UseInterceptors,
+  Param,
+} from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { ApiTags } from '@nestjs/swagger';
 
 import { PriceTrackerService } from '../services/price-tracker.service';
 import { CreatePriceAlertDto } from '../dtos/price-tracker.dto';
+
 import { TransformResponseInterceptor } from '@/interceptors/response.interceptor';
 import { ApiCustomHeader } from '@/shared/swagger/decorator';
-import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Price Tracker')
 @ApiCustomHeader()
@@ -29,7 +38,7 @@ export class PriceTrackerController {
     }
   }
 
-  @Post('create-alert')
+  @Post('alert')
   async createPriceAlert(@Body() createPriceAlertDto: CreatePriceAlertDto) {
     try {
       return this.priceTrackerService.createPriceAlert(createPriceAlertDto);
@@ -50,14 +59,22 @@ export class PriceTrackerController {
   }
 
   @Get('swap-rate/:ethAmount')
-  async getSwapRate(
-    @Param('ethAmount') ethAmount: number
-  ) {
+  async getSwapRate(@Param('ethAmount') ethAmount: number) {
     try {
-        return this.priceTrackerService.getSwapRate(ethAmount);
+      return this.priceTrackerService.getSwapRate(ethAmount);
     } catch (error) {
-        this.logger.error('Error getting swap rate', error);
-        throw new Error('Error getting swap rate');
+      this.logger.error('Error getting swap rate', error);
+      throw new Error('Error getting swap rate');
     }
+  }
+
+  @Get('check-and-alert')
+  async triggerPriceCheckAndAlert() {
+    return this.priceTrackerService.checkPriceChangesAndAlert();
+  }
+
+  @Get('check-alerts')
+  async triggerPriceAlertChecks() {
+    return this.priceTrackerService.checkPriceAlerts();
   }
 }

@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString, IsNumber, IsDate, IsOptional } from 'class-validator';
 
-// You might also want to create a DTO for price alerts
 export class CreatePriceAlertDto {
   @ApiProperty()
   @IsString()
@@ -17,7 +16,7 @@ export class CreatePriceAlertDto {
 }
 
 export class TokenPriceDto {
-    @ApiProperty()
+  @ApiProperty()
   @IsString()
   tokenAddress: string;
 

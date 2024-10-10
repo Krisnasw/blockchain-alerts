@@ -8,36 +8,6 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model users {
-  id         Int       @id @default(autoincrement())
-  name       String?   @db.VarChar
-  email      String?   @db.VarChar(255)
-  password   String?   @db.VarChar(255)
-  created_at DateTime? @default(now()) @db.Timestamp(6)
-  updated_at DateTime? @db.Timestamp(6)
-  todos      todos[]
-}
-
-model categories {
-  id    Int     @id @default(autoincrement())
-  name  String? @db.VarChar(255)
-  todos todos[]
-}
-
-model todos {
-  id          Int         @id @default(autoincrement())
-  category_id Int?
-  user_id     Int?
-  title       String?     @db.VarChar(255)
-  description String?
-  due_date    DateTime?   @db.Date
-  created_at  DateTime?   @default(now()) @db.Timestamp(6)
-  updated_at  DateTime?   @default(now()) @db.Timestamp(6)
-  completed   Boolean?    @default(false)
-  categories  categories? @relation(fields: [category_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users       users?      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-}
-
 model PriceRecord {
   id                Int      @id @default(autoincrement())
   tokenAddress      String

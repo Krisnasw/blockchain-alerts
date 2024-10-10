@@ -299,4 +299,10 @@ export class SettingService {
       apiKey: this.get('MORALIS_API_KEY') || '',
     };
   }
+
+  get resendConfig() {
+    return {
+      apiKey: this.get('RESEND_API_KEY') || '',
+    };
+  }
 }
